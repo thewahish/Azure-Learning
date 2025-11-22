@@ -3,7 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azure Learning - Game Engine</title>
+    <title>Azure Learning - ADHD-Friendly Cloud Education</title>
+    
+    <!-- SEO and Social Meta Tags -->
+    <meta name="description" content="Interactive Azure learning platform designed for ADHD minds. Gamified lessons, bite-sized content, and hands-on labs for mastering cloud computing.">
+    <meta name="keywords" content="Azure learning, ADHD education, cloud computing, interactive tutorials, gamified learning">
+    <meta name="author" content="Obai Sukar - SS Media Productions">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Azure Learning - ADHD-Friendly Cloud Education">
+    <meta property="og:description" content="Master Azure through interactive gameplay designed for ADHD minds. Skip the theory, jump to hands-on learning.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/thewahish/Azure-Learning">
+    <meta property="og:image" content="https://raw.githubusercontent.com/thewahish/Azure-Learning/master/assets/azure-learning-preview.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Azure Learning - ADHD-Friendly Cloud Education">
+    <meta name="twitter:description" content="Interactive Azure learning with gamification, perfect for ADHD minds">
+    
+    <!-- Performance Optimization -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <style>
         :root {
             --azure-blue: #0078d4;
@@ -27,6 +51,43 @@
             background: linear-gradient(135deg, var(--dark-bg) 0%, #2d3436 100%);
             color: var(--text-primary);
             overflow-x: hidden;
+            
+            /* Web Development Domain Standards - Typography */
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Typography Hierarchy - Web Development Standards */
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.2;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            line-height: 1.3;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            line-height: 1.4;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        
+        p {
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
         .game-header {
@@ -300,6 +361,55 @@
             transform: scale(1.2);
         }
 
+        /* Concept Card Styles */
+        .concept-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .concept-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .concept-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .concept-card h5 {
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+        }
+        
+        .concept-card p {
+            margin: 0.5rem 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .concept-details {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 200px; }
+        }
+
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
@@ -318,13 +428,21 @@
             .player-stats {
                 gap: 1rem;
             }
+            
+            .concept-card {
+                padding: 1rem;
+            }
+            
+            .concept-icon {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <header class="game-header">
         <div>
-            <h1>🎮 Azure Learning Adventure</h1>
+            <h1>🎮 Azure Learning</h1>
         </div>
         <div class="player-stats">
             <div class="stat-item">
@@ -414,9 +532,86 @@
                 <h3>🎬 Video Introduction (3 minutes)</h3>
                 <p style="margin-bottom: 1rem;">Watch this fun explanation of Azure Virtual Machines - think of them as digital pets you feed with CPU and RAM!</p>
                 
-                <div class="video-container">
-                    <!-- YouTube video will be embedded here -->
-                    <iframe src="https://www.youtube.com/embed/wX75Z-4MEoM" allowfullscreen></iframe>
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    <button class="action-button" onclick="skipToLab()" style="background: linear-gradient(45deg, #FF9800, #F57C00);">
+                        ⚡ Skip to Hands-On Lab
+                    </button>
+                    <small style="display: block; margin-top: 0.5rem; opacity: 0.7;">
+                        ADHD-friendly: Jump straight to doing!
+                    </small>
+                </div>
+                
+                <!-- Interactive Video Section - No External Dependencies -->
+                <div class="interactive-video-section">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; border-radius: 15px; color: white; text-align: center;">
+                        <h4>🎬 Azure VM Concepts - Visual Learning</h4>
+                        <p style="margin-bottom: 1.5rem;">Learn Azure VMs through interactive analogies (3 minutes)</p>
+                        
+                        <!-- Animated Concept Cards -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                            <div class="concept-card" onclick="showConcept('cpu')">
+                                <div class="concept-icon">🍽️</div>
+                                <h5>CPU = Feeding Your Digital Pet</h5>
+                                <p>More cores = bigger appetite for tasks</p>
+                                <div class="concept-details" id="cpu-details" style="display: none;">
+                                    <strong>Think of it like:</strong><br>
+                                    • 1 Core = Can eat 1 meal at a time<br>
+                                    • 4 Cores = Can handle 4 different snacks<br>
+                                    • More CPU = Faster task completion
+                                </div>
+                            </div>
+                            
+                            <div class="concept-card" onclick="showConcept('ram')">
+                                <div class="concept-icon">⚡</div>
+                                <h5>RAM = Your Pet's Memory</h5>
+                                <p>How much it can remember while working</p>
+                                <div class="concept-details" id="ram-details" style="display: none;">
+                                    <strong>Real world example:</strong><br>
+                                    • 1GB = Can remember a short conversation<br>
+                                    • 8GB = Can juggle multiple conversations<br>
+                                    • 16GB+ = Photographic memory for everything
+                                </div>
+                            </div>
+                            
+                            <div class="concept-card" onclick="showConcept('storage')">
+                                <div class="concept-icon">🏠</div>
+                                <h5>Storage = Digital Home</h5>
+                                <p>Where all files and programs live</p>
+                                <div class="concept-details" id="storage-details" style="display: none;">
+                                    <strong>Home sizes:</strong><br>
+                                    • 30GB = Studio apartment (basic needs)<br>
+                                    • 100GB = One bedroom (comfortable)<br>
+                                    • 1TB+ = Mansion (store everything)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 10px; margin-top: 1.5rem;">
+                            <strong>🎯 Quick Summary:</strong> Azure VMs are like renting a computer in the cloud. You choose the size (CPU), memory (RAM), and storage space based on what you need to do!
+                        </div>
+                        
+                        <div style="margin-top: 1rem;">
+                            <button class="action-button" onclick="markVideoComplete()" style="background: linear-gradient(45deg, #4CAF50, #45a049);">
+                                ✅ Got It! Ready for Hands-On
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Optional: Real Video Links (External) -->
+                    <div style="margin-top: 1rem; text-align: center;">
+                        <small style="opacity: 0.7;">
+                            Need more help? 
+                            <a href="https://learn.microsoft.com/en-us/azure/virtual-machines/" target="_blank" style="color: #0078d4;">
+                                📖 Azure VM Documentation
+                            </a> | 
+                            <a href="https://azure.microsoft.com/en-us/free/" target="_blank" style="color: #0078d4;">
+                                🆓 Free Azure Account
+                            </a> | 
+                            <a href="https://portal.azure.com" target="_blank" style="color: #0078d4;">
+                                🌐 Azure Portal
+                            </a>
+                        </small>
+                    </div>
                 </div>
 
                 <div class="lab-section">
@@ -427,7 +622,9 @@
                         <span class="step-number">1</span>
                         <strong>Azure Portal Scavenger Hunt (3 min)</strong>
                         <p>Let's find the Virtual Machines service in the Azure Portal. It's like a treasure hunt!</p>
-                        <button class="action-button" onclick="openAzurePortal()">🔍 Open Azure Portal</button>
+                        <a href="https://portal.azure.com/#create/Microsoft.VirtualMachine-ARM" target="_blank" class="action-button" style="text-decoration: none; display: inline-block;">
+                            🔍 Open Azure Portal (VM Creation)
+                        </a>
                         <button class="action-button" onclick="markStepComplete(1)">✅ Found It!</button>
                     </div>
 
@@ -522,10 +719,7 @@
             console.log('Loading quest:', questId);
         }
 
-        // Open Azure Portal
-        function openAzurePortal() {
-            window.open('https://portal.azure.com', '_blank');
-        }
+        // All Azure Portal links are now direct HTML links - no JavaScript popups needed!
 
         // Mark step as complete
         function markStepComplete(stepNumber) {
@@ -617,6 +811,72 @@
 
         // Auto-save progress every 30 seconds
         setInterval(saveProgress, 30000);
+
+        // No external video dependencies - all learning is self-contained!
+
+        // Interactive concept learning
+        let conceptsViewed = [];
+        
+        function showConcept(conceptType) {
+            // Hide all concept details first
+            document.querySelectorAll('.concept-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+            
+            // Show the clicked concept
+            const detailElement = document.getElementById(conceptType + '-details');
+            detailElement.style.display = 'block';
+            
+            // Track viewed concepts
+            if (!conceptsViewed.includes(conceptType)) {
+                conceptsViewed.push(conceptType);
+                gameState.xp += 10;
+                updateUI();
+            }
+            
+            // If all 3 concepts viewed, award bonus
+            if (conceptsViewed.length === 3) {
+                showAchievement('Concept Master!', 'Explored all Azure VM concepts!');
+                gameState.xp += 30;
+                updateUI();
+            }
+            
+            saveProgress();
+        }
+        
+        function markVideoComplete() {
+            // Mark interactive learning as complete
+            gameState.completedInteractiveLearning = true;
+            gameState.xp += 50;
+            
+            showAchievement('Learning Complete!', 'Ready for hands-on Azure action!');
+            
+            // Scroll to lab section
+            document.querySelector('.lab-section').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+            
+            updateUI();
+            saveProgress();
+        }
+
+        // ADHD-friendly skip to hands-on content
+        function skipToLab() {
+            document.querySelector('.lab-section').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+            
+            // Mark video as "watched" for progress tracking
+            gameState.skippedVideo = true;
+            
+            // Show encouraging message
+            showAchievement('Hands-On Learner!', 'Jumped straight to the action - nice choice!');
+            
+            // Award small XP for making a learning choice
+            gameState.xp += 25;
+            updateUI();
+            saveProgress();
+        }
     </script>
 </body>
 </html>
