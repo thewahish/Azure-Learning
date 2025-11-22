@@ -336,6 +336,28 @@
         .achievement-popup.show {
             right: 20px;
         }
+        
+        /* Detailed Context Styling */
+        .detailed-context {
+            animation: slideDown 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .toggle-button {
+            background: linear-gradient(45deg, #6c757d, #5a6268);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
 
         .progress-indicator {
             display: flex;
@@ -523,14 +545,138 @@
                 </div>
 
                 <div class="progress-indicator">
-                    <div class="progress-dot current"></div>
-                    <div class="progress-dot"></div>
-                    <div class="progress-dot"></div>
-                    <div class="progress-dot"></div>
+                    <div class="progress-dot current" title="Step 1: Azure Account Setup"></div>
+                    <div class="progress-dot" title="Step 2: Free Trial Setup"></div>
+                    <div class="progress-dot" title="Step 3: Portal Exploration"></div>
+                    <div class="progress-dot" title="Step 4: Create VM"></div>
+                    <div class="progress-dot" title="Step 5: Connect & Celebrate"></div>
+                </div>
+
+                <!-- STEP 0: Pre-Requirements Check -->
+                <div class="lab-section" style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.05)); border-color: #FF9800;">
+                    <h3>📋 Before We Start: Quick Checklist</h3>
+                    <p>Let's make sure you have everything you need for this Azure adventure!</p>
+                    
+                    <div class="lab-step">
+                        <span class="step-number">✓</span>
+                        <strong>Requirements Check (2 min)</strong>
+                        <div style="margin-top: 1rem;">
+                            <label style="display: block; margin: 0.5rem 0; cursor: pointer;">
+                                <input type="checkbox" id="req-email" onchange="updatePreReqs()"> Valid email address (Gmail, Outlook, etc.)
+                            </label>
+                            <label style="display: block; margin: 0.5rem 0; cursor: pointer;">
+                                <input type="checkbox" id="req-phone" onchange="updatePreReqs()"> Phone number for verification
+                            </label>
+                            <label style="display: block; margin: 0.5rem 0; cursor: pointer;">
+                                <input type="checkbox" id="req-card" onchange="updatePreReqs()"> Credit/Debit card (won't be charged for free trial)
+                            </label>
+                        </div>
+                        <button class="action-button" id="prereq-btn" onclick="proceedToAccountSetup()" disabled style="opacity: 0.5;">✅ I Have Everything!</button>
+                    </div>
+                </div>
+
+                <!-- STEP 1: Azure Account Creation (NEW!) -->
+                <div class="lab-section" id="account-setup-section" style="display: none;">
+                    <h3>🚀 Step 1: Create Your Azure Account (5-7 minutes)</h3>
+                    <p>Time to join the Azure family! We'll walk through every single step so you don't get lost.</p>
+                    
+                    <div class="lab-step">
+                        <span class="step-number">1</span>
+                        <strong>Navigate to Azure Signup</strong>
+                        <p>Click this button to open Azure signup in a new tab (keep this page open!):</p>
+                        <a href="https://azure.microsoft.com/en-us/free/" target="_blank" class="action-button" style="text-decoration: none; display: inline-block;">
+                            🌐 Open Azure Free Account Signup
+                        </a>
+                        
+                        <button class="toggle-button" onclick="toggleDetails('signup-details')" style="margin-left: 1rem;">
+                            📖 Show Detailed Guide
+                        </button>
+                        
+                        <div id="signup-details" class="detailed-context" style="display: none;">
+                            <div style="background: rgba(0,0,0,0.1); padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+                                <h5>🔍 What you'll see on the Azure signup page:</h5>
+                                <ul style="text-align: left; margin: 1rem 0;">
+                                    <li><strong>"Start free"</strong> - Big blue button (click this!)</li>
+                                    <li><strong>"$200 credit"</strong> - Free money to spend on Azure services</li>
+                                    <li><strong>"Free for 12 months"</strong> - Popular services free for a year</li>
+                                    <li><strong>"Always free"</strong> - Some services free forever</li>
+                                </ul>
+                                <p><strong>✨ Pro Tip:</strong> Look for the big "Start free" button - that's your target!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lab-step">
+                        <span class="step-number">2</span>
+                        <strong>Choose Your Account Type</strong>
+                        <p>Azure will ask what kind of account you want. Here's what to pick:</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                            <div style="background: rgba(16, 124, 16, 0.1); border: 2px solid #107c10; padding: 1rem; border-radius: 10px;">
+                                <h5 style="color: #107c10;">✅ RECOMMENDED: Personal Microsoft Account</h5>
+                                <p style="font-size: 0.9rem;">• Easy setup with Gmail/Outlook<br>• Full $200 credit<br>• Perfect for learning</p>
+                            </div>
+                            <div style="background: rgba(255, 152, 0, 0.1); border: 2px solid #FF9800; padding: 1rem; border-radius: 10px;">
+                                <h5 style="color: #FF9800;">⚠️ Work/School Account</h5>
+                                <p style="font-size: 0.9rem;">• May have restrictions<br>• Ask IT first<br>• Limited control</p>
+                            </div>
+                        </div>
+                        
+                        <button class="action-button" onclick="markStepComplete('account-type')">👤 I Chose Personal Account</button>
+                    </div>
+                    
+                    <div class="lab-step">
+                        <span class="step-number">3</span>
+                        <strong>Fill Out the Signup Form</strong>
+                        <p>Azure needs some info about you. Here's what each field means:</p>
+                        
+                        <button class="toggle-button" onclick="toggleDetails('form-details')">
+                            📝 Show Form Guide
+                        </button>
+                        
+                        <div id="form-details" class="detailed-context" style="display: none;">
+                            <div style="background: rgba(0,0,0,0.1); padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+                                <h5>📋 Form Field Explanations:</h5>
+                                <table style="width: 100%; margin-top: 1rem; border-collapse: collapse;">
+                                    <tr style="background: rgba(255,255,255,0.1);">
+                                        <td style="padding: 0.5rem; font-weight: bold; border: 1px solid #444;">Field</td>
+                                        <td style="padding: 0.5rem; font-weight: bold; border: 1px solid #444;">What to Enter</td>
+                                        <td style="padding: 0.5rem; font-weight: bold; border: 1px solid #444;">Why They Need It</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Email</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Your real email</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Account recovery & notifications</td>
+                                    </tr>
+                                    <tr style="background: rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Password</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Strong password</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Security (use password manager!)</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Country</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Where you live</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Billing region & compliance</td>
+                                    </tr>
+                                    <tr style="background: rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Phone</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Real phone number</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #444;">Account security verification</td>
+                                    </tr>
+                                </table>
+                                <div style="background: rgba(255, 215, 0, 0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                    <strong>🔒 Security Note:</strong> Microsoft takes security seriously. Use a unique, strong password and enable 2FA when prompted!
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <input type="text" placeholder="What email did you use?" style="background: var(--card-bg); border: 1px solid #666; color: white; padding: 0.5rem; border-radius: 5px; margin: 1rem 0; width: 250px;">
+                        <button class="action-button" onclick="markStepComplete('form-filled')">📝 Form Completed!</button>
+                    </div>
                 </div>
 
                 <h3>🎬 Video Introduction (3 minutes)</h3>
-                <p style="margin-bottom: 1rem;">Watch this fun explanation of Azure Virtual Machines - think of them as digital pets you feed with CPU and RAM!</p>
+                <p style="margin-bottom: 1rem;">Now that you have your Azure account, let's understand what we're about to build!</p>
                 
                 <div style="text-align: center; margin-bottom: 1rem;">
                     <button class="action-button" onclick="skipToLab()" style="background: linear-gradient(45deg, #FF9800, #F57C00);">
@@ -614,34 +760,384 @@
                     </div>
                 </div>
 
+                <!-- STEP 2: Free Trial Setup -->
+                <div class="lab-section" id="trial-setup-section" style="display: none; background: linear-gradient(135deg, rgba(0, 120, 212, 0.1), rgba(0, 188, 242, 0.05));">
+                    <h3>💳 Step 2: Free Trial vs Paid Account (3-5 minutes)</h3>
+                    <p>Time to choose your Azure adventure level! Don't worry - we'll explain everything.</p>
+                    
+                    <div class="lab-step">
+                        <span class="step-number">💰</span>
+                        <strong>Understanding Your Options</strong>
+                        <p>Azure will show you different account types. Here's the breakdown:</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1rem 0;">
+                            <div style="background: linear-gradient(45deg, rgba(16, 124, 16, 0.2), rgba(19, 206, 102, 0.1)); border: 2px solid #107c10; padding: 1.5rem; border-radius: 10px;">
+                                <h5 style="color: #13ce66; margin-bottom: 1rem;">🎉 FREE TRIAL (RECOMMENDED FOR BEGINNERS)</h5>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div>
+                                        <p><strong>✅ What you get:</strong></p>
+                                        <ul style="text-align: left; font-size: 0.9rem;">
+                                            <li>$200 USD credit (lasts 30 days)</li>
+                                            <li>Free services for 12 months</li>
+                                            <li>Always-free tier services</li>
+                                            <li>No automatic charges</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p><strong>💳 What they need:</strong></p>
+                                        <ul style="text-align: left; font-size: 0.9rem;">
+                                            <li>Credit/debit card (for identity verification)</li>
+                                            <li>Phone number (for security)</li>
+                                            <li>Valid ID verification</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div style="background: rgba(255, 215, 0, 0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                    <strong>🛡️ Protection Promise:</strong> Your card WON'T be charged during the free trial. After 30 days or $200 spent, services just stop (unless you manually upgrade).
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="toggle-button" onclick="toggleDetails('billing-details')">
+                            🧾 Show Billing Details
+                        </button>
+                        
+                        <div id="billing-details" class="detailed-context" style="display: none;">
+                            <div style="background: rgba(0,0,0,0.1); padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+                                <h5>💳 Credit Card Information Explained:</h5>
+                                <p style="margin-bottom: 1rem;">Azure requires a card for three reasons:</p>
+                                <ol style="text-align: left; margin-bottom: 1rem;">
+                                    <li><strong>Identity Verification</strong> - Proves you're a real person</li>
+                                    <li><strong>Fraud Prevention</strong> - Stops people from creating multiple accounts</li>
+                                    <li><strong>Age Verification</strong> - Ensures you can legally enter contracts</li>
+                                </ol>
+                                <div style="background: rgba(16, 124, 16, 0.2); padding: 1rem; border-radius: 8px;">
+                                    <p><strong>🔒 Your Protection:</strong></p>
+                                    <ul style="text-align: left; font-size: 0.9rem;">
+                                        <li>No charges during free trial period</li>
+                                        <li>Clear spending alerts and limits</li>
+                                        <li>Easy cancellation anytime</li>
+                                        <li>Automatic stop when credit runs out</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lab-step">
+                        <span class="step-number">📞</span>
+                        <strong>Phone Verification</strong>
+                        <p>Azure will send you a text or call with a verification code. This is normal!</p>
+                        
+                        <div style="background: rgba(0, 120, 212, 0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                            <p><strong>📱 What happens:</strong></p>
+                            <ol style="text-align: left; font-size: 0.9rem;">
+                                <li>Enter your phone number</li>
+                                <li>Choose "Text me" or "Call me"</li>
+                                <li>Get a 6-digit code</li>
+                                <li>Enter the code on the website</li>
+                                <li>✅ Account verified!</li>
+                            </ol>
+                        </div>
+                        
+                        <input type="tel" placeholder="Your phone number" style="background: var(--card-bg); border: 1px solid #666; color: white; padding: 0.5rem; border-radius: 5px; margin: 0.5rem 0; width: 200px;">
+                        <button class="action-button" onclick="markStepComplete('phone-verified')">📞 Phone Verified!</button>
+                    </div>
+                </div>
+
                 <div class="lab-section">
                     <h3>🎮 Interactive Lab: Azure Portal Adventure</h3>
-                    <p>Time to get your hands dirty! We'll guide you step-by-step through creating your first virtual machine.</p>
+                    <p>Now that you have your Azure account set up, let's create your first virtual machine! We'll guide you step-by-step.</p>
 
                     <div class="lab-step">
                         <span class="step-number">1</span>
-                        <strong>Azure Portal Scavenger Hunt (3 min)</strong>
-                        <p>Let's find the Virtual Machines service in the Azure Portal. It's like a treasure hunt!</p>
-                        <a href="https://portal.azure.com/#create/Microsoft.VirtualMachine-ARM" target="_blank" class="action-button" style="text-decoration: none; display: inline-block;">
-                            🔍 Open Azure Portal (VM Creation)
+                        <strong>Azure Portal Navigation (3 min)</strong>
+                        <p>Let's explore the Azure Portal and find the Virtual Machines service!</p>
+                        
+                        <button class="toggle-button" onclick="toggleDetails('portal-guide')" style="margin-bottom: 1rem;">
+                            🗺️ Show Portal Navigation Guide
+                        </button>
+                        
+                        <div id="portal-guide" class="detailed-context" style="display: none;">
+                            <div style="background: rgba(0,0,0,0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                                <h5>🎯 Portal Navigation Options:</h5>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                                    <div style="background: rgba(0, 120, 212, 0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                                        <h6>Method 1: Search</h6>
+                                        <p style="font-size: 0.8rem;">🔍 Use search bar at top<br>Type "virtual machines"</p>
+                                    </div>
+                                    <div style="background: rgba(16, 124, 16, 0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                                        <h6>Method 2: All Services</h6>
+                                        <p style="font-size: 0.8rem;">📋 Click "All services"<br>Find "Compute" section</p>
+                                    </div>
+                                    <div style="background: rgba(255, 152, 0, 0.1); padding: 1rem; border-radius: 10px; text-align: center;">
+                                        <h6>Method 3: Direct Link</h6>
+                                        <p style="font-size: 0.8rem;">🎯 Use the button below<br>Goes straight there!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="https://portal.azure.com" target="_blank" class="action-button" style="text-decoration: none; display: inline-block; margin-right: 1rem;">
+                            🌐 Open Azure Portal
                         </a>
-                        <button class="action-button" onclick="markStepComplete(1)">✅ Found It!</button>
+                        <a href="https://portal.azure.com/#create/Microsoft.VirtualMachine-ARM" target="_blank" class="action-button" style="text-decoration: none; display: inline-block;">
+                            🎯 Direct to VM Creation
+                        </a>
+                        <button class="action-button" onclick="markStepComplete(1)">✅ Found Virtual Machines!</button>
                     </div>
 
                     <div class="lab-step">
                         <span class="step-number">2</span>
-                        <strong>Name Your Digital Pet (2 min)</strong>
-                        <p>Give your VM a cool name! This is your digital pet - make it memorable.</p>
-                        <input type="text" placeholder="Enter your VM name..." style="background: var(--card-bg); border: 1px solid #666; color: white; padding: 0.5rem; border-radius: 5px; margin: 0.5rem 0;">
-                        <button class="action-button" onclick="markStepComplete(2)">🏷️ Named My VM!</button>
+                        <strong>Configure Your Virtual Machine (8 min)</strong>
+                        <p>Now for the fun part - designing your cloud computer! Each choice affects performance and cost.</p>
+                        
+                        <button class="toggle-button" onclick="toggleDetails('vm-configuration')" style="margin-bottom: 1rem;">
+                            ⚙️ Show Complete Configuration Guide
+                        </button>
+                        
+                        <div id="vm-configuration" class="detailed-context" style="display: none;">
+                            <div style="background: rgba(0,0,0,0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                                <h5>📊 Step-by-Step VM Configuration:</h5>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #0078d4;">💻 1. Basics Tab</h6>
+                                    <ul style="text-align: left; font-size: 0.9rem; margin-left: 1rem;">
+                                        <li><strong>Subscription:</strong> Azure subscription 1 (should be auto-selected)</li>
+                                        <li><strong>Resource group:</strong> Create new → "MyFirstVM-RG"</li>
+                                        <li><strong>Virtual machine name:</strong> "MyFirstVM" (or your choice)</li>
+                                        <li><strong>Region:</strong> Pick closest to you for best performance</li>
+                                        <li><strong>Image:</strong> Windows Server 2022 or Ubuntu 20.04 LTS</li>
+                                        <li><strong>Size:</strong> Standard_B1s (cheapest) or Standard_B2s (better)</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #107c10;">🔑 2. Authentication</h6>
+                                    <ul style="text-align: left; font-size: 0.9rem; margin-left: 1rem;">
+                                        <li><strong>Username:</strong> azureuser (or your choice, avoid "admin")</li>
+                                        <li><strong>Password:</strong> Complex password (12+ chars, mixed case, numbers, symbols)</li>
+                                        <li><strong>Confirm password:</strong> Same as above</li>
+                                        <li><strong>Public inbound ports:</strong> Allow RDP (3389) for Windows or SSH (22) for Linux</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #FF9800;">💰 3. Cost Estimation</h6>
+                                    <ul style="text-align: left; font-size: 0.9rem; margin-left: 1rem;">
+                                        <li><strong>Standard_B1s:</strong> ~$8-15/month (perfect for learning)</li>
+                                        <li><strong>Standard_B2s:</strong> ~$30-40/month (better performance)</li>
+                                        <li><strong>Remember:</strong> You have $200 free credit!</li>
+                                        <li><strong>Turn off when not using</strong> to save money</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="background: rgba(255, 215, 0, 0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                    <strong>💡 Beginner Tips:</strong>
+                                    <ul style="text-align: left; font-size: 0.9rem; margin-top: 0.5rem;">
+                                        <li>Start small - you can always resize later</li>
+                                        <li>Choose Windows if you want familiar interface</li>
+                                        <li>Choose Linux if you want to learn command line</li>
+                                        <li>Write down your username/password somewhere safe!</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                            <input type="text" placeholder="VM Name" style="background: var(--card-bg); border: 1px solid #666; color: white; padding: 0.5rem; border-radius: 5px;">
+                            <input type="text" placeholder="Username" style="background: var(--card-bg); border: 1px solid #666; color: white; padding: 0.5rem; border-radius: 5px;">
+                        </div>
+                        <button class="action-button" onclick="markStepComplete(2)">⚙️ VM Configured!</button>
                     </div>
 
                     <div class="lab-step">
                         <span class="step-number">3</span>
                         <strong>Deploy & Connect (7 min)</strong>
-                        <p>Hit the create button and watch the magic happen! We'll show you how to connect once it's ready.</p>
-                        <button class="action-button" onclick="simulateDeployment()">🚀 Deploy VM</button>
-                        <button class="action-button success-button" onclick="completeQuest()" style="display: none;" id="complete-btn">🎉 Quest Complete!</button>
+                        <p>Time to launch your virtual machine! This is where Azure works its magic.</p>
+                        
+                        <button class="toggle-button" onclick="toggleDetails('deployment-process')" style="margin-bottom: 1rem;">
+                            🚀 What Happens During Deployment?
+                        </button>
+                        
+                        <div id="deployment-process" class="detailed-context" style="display: none;">
+                            <div style="background: rgba(0,0,0,0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                                <h5>⏰ Deployment Timeline (5-10 minutes):</h5>
+                                <ol style="text-align: left; margin: 1rem 0;">
+                                    <li><strong>Validation (30 seconds):</strong> Azure checks your configuration</li>
+                                    <li><strong>Resource Creation (2-3 min):</strong> Setting up your VM infrastructure</li>
+                                    <li><strong>OS Installation (3-5 min):</strong> Installing your chosen operating system</li>
+                                    <li><strong>Network Configuration (1 min):</strong> Setting up connectivity</li>
+                                    <li><strong>Final Setup (30 seconds):</strong> Last touches and startup</li>
+                                </ol>
+                                <div style="background: rgba(16, 124, 16, 0.2); padding: 1rem; border-radius: 8px;">
+                                    <p><strong>🎉 Success!</strong> You'll get a notification when deployment is complete. Then you can connect to your VM using Remote Desktop (Windows) or SSH (Linux)!</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="action-button" onclick="simulateDeployment()">🚀 Deploy My VM!</button>
+                        <button class="action-button success-button" onclick="completeQuest()" style="display: none;" id="complete-btn">🎉 VM Created! Quest Complete!</button>
+                    </div>
+                </div>
+
+                <!-- TROUBLESHOOTING SECTION -->\n                <div class="lab-section" style="background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(255, 193, 7, 0.05)); border-color: #dc3545; margin-top: 2rem;">
+                    <h3>🔧 Troubleshooting: When Things Don't Go as Planned</h3>
+                    <p>Don't panic! Every Azure explorer faces challenges. Here are the most common issues and how to fix them:</p>
+                    
+                    <div class="lab-step">
+                        <span class="step-number">🚨</span>
+                        <strong>Common Account Setup Issues</strong>
+                        
+                        <button class="toggle-button" onclick="toggleDetails('account-issues')" style="margin-bottom: 1rem;">
+                            🔧 Show Account Setup Fixes
+                        </button>
+                        
+                        <div id="account-issues" class="detailed-context" style="display: none;">
+                            <div style="background: rgba(0,0,0,0.1); padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+                                <h5>🚫 Common Problems & Solutions:</h5>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #dc3545;">📞 Phone Verification Failed</h6>
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul style="text-align: left; font-size: 0.9rem;">
+                                        <li>Try "Call me" instead of "Text me"</li>
+                                        <li>Ensure your number includes the correct country code</li>
+                                        <li>Wait 10 minutes and try again</li>
+                                        <li>Use a different phone number</li>
+                                        <li>Check if your carrier blocks international texts</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #dc3545;">💳 Credit Card Rejected</h6>
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul style="text-align: left; font-size: 0.9rem;">
+                                        <li>Contact your bank - they might be blocking international transactions</li>
+                                        <li>Try a different card (debit often works better than credit)</li>
+                                        <li>Ensure billing address matches your card exactly</li>
+                                        <li>Wait 24 hours and try again</li>
+                                        <li>Try using a prepaid Visa/Mastercard</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #dc3545;">📧 Email Already in Use</h6>
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul style="text-align: left; font-size: 0.9rem;">
+                                        <li>You might already have a Microsoft account - try signing in</li>
+                                        <li>Check if you have an old Outlook/Xbox/Office account</li>
+                                        <li>Use a different email address</li>
+                                        <li>Try the account recovery option</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lab-step">
+                        <span class="step-number">⚠️</span>
+                        <strong>VM Creation Problems</strong>
+                        
+                        <button class="toggle-button" onclick="toggleDetails('vm-issues')" style="margin-bottom: 1rem;">
+                            🔧 Show VM Creation Fixes
+                        </button>
+                        
+                        <div id="vm-issues" class="detailed-context" style="display: none;">
+                            <div style="background: rgba(0,0,0,0.1); padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+                                <h5>🚫 VM Creation Issues:</h5>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #dc3545;">💵 "Quota Exceeded" Error</h6>
+                                    <p><strong>What it means:</strong> You've hit a limit on your free account</p>
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul style="text-align: left; font-size: 0.9rem;">
+                                        <li>Choose a smaller VM size (Standard_B1s is the smallest)</li>
+                                        <li>Try a different region (some regions have more capacity)</li>
+                                        <li>Delete old VMs you're not using</li>
+                                        <li>Wait a few hours and try again</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #dc3545;">💻 "VM Size Not Available"</h6>
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul style="text-align: left; font-size: 0.9rem;">
+                                        <li>Try a different region (East US, West Europe usually have good availability)</li>
+                                        <li>Choose a more common VM size (B1s, B2s, D2s)</li>
+                                        <li>Wait a few hours and try again</li>
+                                        <li>Check Azure status page for known issues</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #dc3545;">🔑 "Authentication Failed"</h6>
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul style="text-align: left; font-size: 0.9rem;">
+                                        <li>Make sure password meets complexity requirements (12+ chars, mixed case, numbers, symbols)</li>
+                                        <li>Username can't be "admin", "administrator", "root", or "user"</li>
+                                        <li>Try a completely different username/password combination</li>
+                                        <li>Use SSH key authentication instead (for Linux VMs)</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin: 1rem 0;">
+                                    <h6 style="color: #dc3545;">🌐 "Deployment Failed"</h6>
+                                    <p><strong>Solutions:</strong></p>
+                                    <ul style="text-align: left; font-size: 0.9rem;">
+                                        <li>Click on the error details for specific information</li>
+                                        <li>Try a different VM size or region</li>
+                                        <li>Check if you have enough free credits remaining</li>
+                                        <li>Delete the failed resource group and start fresh</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lab-step">
+                        <span class="step-number">🆘</span>
+                        <strong>Getting Help When You're Really Stuck</strong>
+                        <p>Remember: every expert was once a beginner! Here's how to get unstuck:</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                            <div style="background: rgba(0, 120, 212, 0.1); padding: 1rem; border-radius: 10px;">
+                                <h6>📖 Azure Documentation</h6>
+                                <p style="font-size: 0.8rem;">Official step-by-step guides and troubleshooting</p>
+                                <a href="https://docs.microsoft.com/en-us/azure/virtual-machines/" target="_blank" style="color: #0078d4;">Azure VM Docs</a>
+                            </div>
+                            <div style="background: rgba(255, 152, 0, 0.1); padding: 1rem; border-radius: 10px;">
+                                <h6>💬 Community Forums</h6>
+                                <p style="font-size: 0.8rem;">Ask questions, get answers from the community</p>
+                                <a href="https://docs.microsoft.com/en-us/answers/products/azure" target="_blank" style="color: #FF9800;">Azure Q&A</a>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                            <div style="background: rgba(16, 124, 16, 0.1); padding: 1rem; border-radius: 10px;">
+                                <h6>🎥 Video Tutorials</h6>
+                                <p style="font-size: 0.8rem;">Visual learners, Microsoft's official channel</p>
+                                <a href="https://www.youtube.com/channel/UC0m-80FnNY2Qb7obvTL_2fA" target="_blank" style="color: #107c10;">Azure YouTube</a>
+                            </div>
+                            <div style="background: rgba(138, 43, 226, 0.1); padding: 1rem; border-radius: 10px;">
+                                <h6>🎓 Learning Paths</h6>
+                                <p style="font-size: 0.8rem;">Structured learning modules from Microsoft</p>
+                                <a href="https://docs.microsoft.com/en-us/learn/azure/" target="_blank" style="color: #8A2BE2;">Microsoft Learn</a>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255, 215, 0, 0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <p><strong>💡 Pro Tips for Getting Help:</strong></p>
+                            <ul style="text-align: left; font-size: 0.9rem; margin-top: 0.5rem;">
+                                <li>Take screenshots of error messages</li>
+                                <li>Note down the exact steps you took</li>
+                                <li>Include your VM size, region, and OS when asking for help</li>
+                                <li>Search for the exact error message in quotes</li>
+                                <li>Be patient - Azure support is usually very helpful!</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="action-button" onclick="markStepComplete('help-understood')">🆘 I Know Where to Get Help!</button>
                     </div>
                 </div>
 
@@ -654,6 +1150,7 @@
                         <li style="margin: 0.5rem 0;">☐ Create and name your VM</li>
                         <li style="margin: 0.5rem 0;">☐ Start deployment process</li>
                         <li style="margin: 0.5rem 0;">☐ Take screenshot for trophy collection</li>
+                        <li style="margin: 0.5rem 0;">☐ Know where to get help when stuck</li>
                     </ul>
                 </div>
             </div>
@@ -720,16 +1217,119 @@
         }
 
         // All Azure Portal links are now direct HTML links - no JavaScript popups needed!
+        
+        // Update prerequisites and show account setup
+        function updatePreReqs() {
+            const email = document.getElementById('req-email')?.checked;
+            const phone = document.getElementById('req-phone')?.checked;
+            const card = document.getElementById('req-card')?.checked;
+            const btn = document.getElementById('prereq-btn');
+            
+            if (btn) {
+                if (email && phone && card) {
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                } else {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.5';
+                }
+            }
+        }
+        
+        // Proceed to account setup
+        function proceedToAccountSetup() {
+            const section = document.getElementById('account-setup-section');
+            if (section) {
+                section.style.display = 'block';
+                section.scrollIntoView({ behavior: 'smooth' });
+                gameState.xp += 25;
+                updateUI();
+                saveProgress();
+                showAchievement('Ready to Start!', 'All requirements checked - let\'s create your Azure account!');
+            }
+        }
+        
+        // Toggle detailed context sections
+        function toggleDetails(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                if (element.style.display === 'none' || element.style.display === '') {
+                    element.style.display = 'block';
+                    // Award XP for viewing detailed content
+                    gameState.xp += 5;
+                    updateUI();
+                    saveProgress();
+                } else {
+                    element.style.display = 'none';
+                }
+            }
+        }
 
-        // Mark step as complete
-        function markStepComplete(stepNumber) {
-            const step = document.querySelectorAll('.lab-step')[stepNumber - 1];
-            step.style.background = 'rgba(16, 124, 16, 0.1)';
-            step.style.borderLeftColor = '#107c10';
+        // Mark step as complete - enhanced version
+        function markStepComplete(stepId) {
+            // Handle both string IDs and numeric IDs (backwards compatibility)
+            if (typeof stepId === 'number') {
+                markStepCompleteOld(stepId);
+                return;
+            }
+            
+            // Award XP for completing steps
+            gameState.xp += 30;
+            
+            // Track completed steps
+            if (!gameState.completedSteps) {
+                gameState.completedSteps = [];
+            }
+            if (!gameState.completedSteps.includes(stepId)) {
+                gameState.completedSteps.push(stepId);
+            }
+            
+            // Show appropriate next section based on step
+            switch(stepId) {
+                case 'account-type':
+                    showAchievement('Account Type Chosen!', 'Personal Microsoft Account selected!');
+                    break;
+                case 'form-filled':
+                    const trialSection = document.getElementById('trial-setup-section');
+                    if (trialSection) {
+                        trialSection.style.display = 'block';
+                        trialSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    showAchievement('Account Created!', 'Azure account successfully created!');
+                    break;
+                case 'phone-verified':
+                    showAchievement('Account Verified!', 'Phone verification complete! Ready to explore Azure Portal.');
+                    gameState.xp += 50; // Bonus XP for completing account setup
+                    break;
+                case 'found-vms':
+                    showAchievement('Portal Explorer!', 'Found Virtual Machines service!');
+                    break;
+                case 'vm-configured':
+                    showAchievement('VM Designer!', 'Virtual machine configuration complete!');
+                    break;
+                case 'auth-configured':
+                    showAchievement('Security Expert!', 'VM authentication configured!');
+                    break;
+                default:
+                    showAchievement('Progress Made!', 'Step completed successfully!');
+            }
+            
+            updateUI();
+            saveProgress();
+        }
+        
+        // Original mark step complete for numbered steps (backwards compatibility)
+        function markStepCompleteOld(stepNumber) {
+            const steps = document.querySelectorAll('.lab-step');
+            const step = steps[stepNumber - 1];
+            if (step) {
+                step.style.background = 'rgba(16, 124, 16, 0.1)';
+                step.style.borderLeftColor = '#107c10';
+            }
             
             // Update progress dots
             const dots = document.querySelectorAll('.progress-dot');
-            if (dots[stepNumber]) {
+            if (dots[stepNumber - 1]) {
                 dots[stepNumber - 1].classList.add('completed');
                 dots[stepNumber - 1].classList.remove('current');
                 if (dots[stepNumber]) {
@@ -739,8 +1339,16 @@
             
             // Show complete button if all steps done
             if (stepNumber === 3) {
-                document.getElementById('complete-btn').style.display = 'inline-block';
+                const completeBtn = document.getElementById('complete-btn');
+                if (completeBtn) {
+                    completeBtn.style.display = 'inline-block';
+                }
             }
+            
+            // Award XP for completing numbered steps
+            gameState.xp += 30;
+            updateUI();
+            saveProgress();
         }
 
         // Simulate VM deployment
