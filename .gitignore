@@ -1,0 +1,80 @@
+# Azure Learning Project - Git Ignore
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# User progress data (keep local)
+progress.json
+user-analytics.json
+session-data.json
+
+# Temporary files
+*.tmp
+*.temp
+*~
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies (if using npm)
+node_modules/
+npm_modules/
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Azure credentials (NEVER commit)
+.azure/
+azure-credentials.json
+subscription-keys.json
+
+# Local development files
+local-config.js
+dev-settings.json
+
+# Screenshots and personal learning artifacts
+screenshots/
+personal-notes/
+my-achievements/
+
+# Backup files
+*.bak
+backup/
+
+# Cache files
+.cache/
+*.cache
+
+# Test files
+test-data/
+playground/
+
+# Build output (if applicable)
+dist/
+build/
+output/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+
+# Personal customizations
+custom-theme.css
+personal-settings.json

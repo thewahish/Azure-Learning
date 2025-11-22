@@ -1,0 +1,468 @@
+/* ADHD-Optimized Styling for Azure Learning Platform */
+
+/* Focus Mode Styles */
+.focus-mode {
+    filter: contrast(1.1) brightness(0.95);
+    transition: all 0.3s ease;
+}
+
+.focus-mode .sidebar {
+    opacity: 0.7;
+}
+
+.focus-mode .current-module {
+    border: 2px solid var(--azure-blue);
+    box-shadow: 0 0 30px rgba(0, 120, 212, 0.3);
+}
+
+/* Break Mode Styles */
+.break-mode {
+    filter: sepia(0.2) brightness(1.1);
+}
+
+.break-mode::after {
+    content: "⏸️ Break Time - Rest Your Brain";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    color: white;
+    padding: 2rem 3rem;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    z-index: 10000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ADHD Notification System */
+.adhd-notification {
+    position: fixed;
+    top: 20px;
+    right: -400px;
+    max-width: 350px;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    color: white;
+    font-weight: 500;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transition: right 0.5s ease;
+    z-index: 1000;
+    border-left: 4px solid;
+}
+
+.adhd-notification.show {
+    right: 20px;
+}
+
+.adhd-notification.success {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+    border-left-color: #2E7D32;
+}
+
+.adhd-notification.info {
+    background: linear-gradient(45deg, #2196F3, #1976D2);
+    border-left-color: #1565C0;
+}
+
+.adhd-notification.gentle {
+    background: linear-gradient(45deg, #FF9800, #F57C00);
+    border-left-color: #E65100;
+}
+
+.adhd-notification.warning {
+    background: linear-gradient(45deg, #FF5722, #D84315);
+    border-left-color: #BF360C;
+}
+
+/* XP Gain Animation */
+.xp-gain-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(45deg, #FFD700, #FFA000);
+    color: #000;
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    z-index: 2000;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.xp-gain-animation.animate {
+    transform: translate(-50%, -50%) scale(1);
+    animation: xp-celebration 2s ease-in-out;
+}
+
+.xp-amount {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.xp-reason {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+@keyframes xp-celebration {
+    0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+    50% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); }
+    100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); }
+}
+
+/* Attention Management Features */
+.attention-helper {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    max-width: 300px;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.3s ease;
+}
+
+.attention-helper.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Progress Ring Animation */
+.progress-ring {
+    width: 60px;
+    height: 60px;
+    position: relative;
+}
+
+.progress-ring-circle {
+    fill: none;
+    stroke: #444;
+    stroke-width: 4;
+    transition: stroke-dasharray 0.3s ease;
+}
+
+.progress-ring-progress {
+    fill: none;
+    stroke: var(--azure-blue);
+    stroke-width: 4;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: stroke-dasharray 0.3s ease;
+}
+
+/* Overwhelm Prevention */
+.complexity-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #666;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.complexity-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--azure-blue);
+}
+
+.advanced-options {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.advanced-options.expanded {
+    max-height: 500px;
+}
+
+/* Dopamine-Optimized Buttons */
+.dopamine-button {
+    background: linear-gradient(45deg, #FF6B35, #F7931E);
+    border: none;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.dopamine-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: all 0.6s ease;
+    transform: translate(-50%, -50%);
+}
+
+.dopamine-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.dopamine-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
+}
+
+/* Celebration Animations */
+@keyframes confetti {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+}
+
+.confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: #FFD700;
+    animation: confetti 3s ease-out forwards;
+    z-index: 1000;
+}
+
+/* Mood-Based Color Themes */
+.theme-energetic {
+    --primary-color: #FF6B35;
+    --secondary-color: #F7931E;
+    --accent-color: #FFDB58;
+}
+
+.theme-calm {
+    --primary-color: #4A90E2;
+    --secondary-color: #7BB3F7;
+    --accent-color: #A8D8EA;
+}
+
+.theme-focus {
+    --primary-color: #6C5CE7;
+    --secondary-color: #A29BFE;
+    --accent-color: #DDA0DD;
+}
+
+/* Adaptive Text Sizing */
+.text-adhd-friendly {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    word-spacing: 2px;
+}
+
+.text-large {
+    font-size: 1.3rem;
+}
+
+.text-extra-large {
+    font-size: 1.5rem;
+}
+
+/* Visual Hierarchy Helpers */
+.importance-high {
+    border-left: 4px solid #FF6B35;
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.1), transparent);
+    padding-left: 1rem;
+}
+
+.importance-medium {
+    border-left: 4px solid #FFA500;
+    background: linear-gradient(90deg, rgba(255, 165, 0, 0.1), transparent);
+    padding-left: 1rem;
+}
+
+.importance-low {
+    border-left: 4px solid #888;
+    background: linear-gradient(90deg, rgba(136, 136, 136, 0.1), transparent);
+    padding-left: 1rem;
+}
+
+/* Timer and Focus Tools */
+.focus-timer {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    min-width: 120px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.timer-display {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.timer-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Break Suggestion Cards */
+.break-suggestions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.break-card {
+    background: linear-gradient(45deg, rgba(76, 175, 80, 0.1), rgba(69, 160, 73, 0.05));
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    padding: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.break-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);
+}
+
+.break-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Error and Success States */
+.error-gentle {
+    background: linear-gradient(45deg, rgba(255, 87, 34, 0.1), rgba(244, 67, 54, 0.05));
+    border: 1px solid rgba(255, 87, 34, 0.3);
+    color: #FF5722;
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+}
+
+.success-encouraging {
+    background: linear-gradient(45deg, rgba(76, 175, 80, 0.1), rgba(69, 160, 73, 0.05));
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    color: #4CAF50;
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+}
+
+/* Mobile ADHD Optimizations */
+@media (max-width: 768px) {
+    .adhd-notification {
+        right: -300px;
+        max-width: 280px;
+        font-size: 0.9rem;
+    }
+    
+    .adhd-notification.show {
+        right: 10px;
+    }
+    
+    .xp-gain-animation {
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    
+    .focus-timer {
+        top: 10px;
+        left: 10px;
+        padding: 0.5rem;
+        min-width: 100px;
+    }
+    
+    .timer-display {
+        font-size: 1.5rem;
+    }
+    
+    .break-suggestions {
+        grid-template-columns: 1fr;
+    }
+    
+    .text-adhd-friendly {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+}
+
+/* High Contrast Mode for Focus */
+.high-contrast {
+    filter: contrast(1.5) brightness(1.1);
+}
+
+.high-contrast .module-card {
+    border: 2px solid white;
+}
+
+.high-contrast .action-button {
+    border: 2px solid white;
+}
+
+/* Reduce Motion for Sensory Issues */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .xp-gain-animation {
+        animation: none;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    
+    .confetti-piece {
+        animation: none;
+        display: none;
+    }
+}
+
+/* Focus Indicators */
+.focus-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--azure-blue), #00BCF2);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.focused .focus-indicator {
+    transform: scaleX(1);
+}
+
+/* Motivation Boosters */
+.motivation-booster {
+    background: linear-gradient(45deg, #FF6B35, #F7931E);
+    color: white;
+    padding: 1rem;
+    border-radius: 15px;
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+}
+
+.motivation-emoji {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}

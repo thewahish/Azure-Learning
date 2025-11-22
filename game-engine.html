@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Learning - Game Engine</title>
+    <style>
+        :root {
+            --azure-blue: #0078d4;
+            --success-green: #107c10;
+            --warning-orange: #ff8c00;
+            --error-red: #d83b01;
+            --dark-bg: #1e1e1e;
+            --card-bg: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #2d3436 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .game-header {
+            background: linear-gradient(90deg, var(--azure-blue), #0086f0);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 120, 212, 0.3);
+        }
+
+        .player-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .level-badge {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            to { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+        }
+
+        .xp-bar {
+            width: 200px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-green), #13ce66);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 300px;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-right: 1px solid #444;
+            overflow-y: auto;
+        }
+
+        .learning-path {
+            margin-bottom: 2rem;
+        }
+
+        .path-header {
+            background: linear-gradient(45deg, var(--azure-blue), #00bcf2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .path-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 120, 212, 0.4);
+        }
+
+        .quest-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quest-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--azure-blue);
+        }
+
+        .quest-completed {
+            border-left-color: var(--success-green);
+            background: rgba(16, 124, 16, 0.1);
+        }
+
+        .quest-current {
+            border-left-color: var(--warning-orange);
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .quest-status {
+            font-size: 1.2rem;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .module-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .module-title {
+            font-size: 1.8rem;
+            color: var(--azure-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .module-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-badge {
+            background: rgba(0, 120, 212, 0.2);
+            color: var(--azure-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 1.5rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .lab-section {
+            background: linear-gradient(135deg, rgba(0, 120, 212, 0.1), rgba(0, 188, 242, 0.05));
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 120, 212, 0.3);
+            margin: 1.5rem 0;
+        }
+
+        .lab-step {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--azure-blue);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--azure-blue);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        .action-button {
+            background: linear-gradient(45deg, var(--azure-blue), #0086f0);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 120, 212, 0.4);
+        }
+
+        .success-button {
+            background: linear-gradient(45deg, var(--success-green), #13ce66);
+        }
+
+        .achievement-popup {
+            position: fixed;
+            top: 20px;
+            right: -400px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+            transition: right 0.5s ease;
+            z-index: 1000;
+        }
+
+        .achievement-popup.show {
+            right: 20px;
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #666;
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.completed {
+            background: var(--success-green);
+        }
+
+        .progress-dot.current {
+            background: var(--warning-orange);
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                order: 2;
+            }
+            
+            .game-header {
+                padding: 0.5rem 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .player-stats {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="game-header">
+        <div>
+            <h1>🎮 Azure Learning Adventure</h1>
+        </div>
+        <div class="player-stats">
+            <div class="stat-item">
+                <span class="level-badge">Level <span id="player-level">1</span></span>
+            </div>
+            <div class="stat-item">
+                <span>⚡ <span id="current-xp">0</span>/<span id="next-level-xp">100</span> XP</span>
+                <div class="xp-bar">
+                    <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span>🏆 <span id="badge-count">0</span> Badges</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="learning-path">
+                <div class="path-header" onclick="togglePath('vm-quest')">
+                    🎮 Virtual Machine Quest
+                    <div style="font-size: 0.9rem; opacity: 0.8;">Perfect for beginners</div>
+                </div>
+                <div id="vm-quest" class="quest-list">
+                    <div class="quest-item quest-current" onclick="loadQuest('boot-first-vm')">
+                        <span>🚀 Boot Your First VM</span>
+                        <span class="quest-status">⚡</span>
+                    </div>
+                    <div class="quest-item" onclick="loadQuest('connect-conquer')">
+                        <span>🔗 Connect & Conquer</span>
+                        <span class="quest-status">🔒</span>
+                    </div>
+                    <div class="quest-item" onclick="loadQuest('scale-army')">
+                        <span>📈 Scale Your Army</span>
+                        <span class="quest-status">🔒</span>
+                    </div>
+                    <div class="quest-item" onclick="loadQuest('web-app-boss')">
+                        <span>👑 Boss Fight: Deploy Web App</span>
+                        <span class="quest-status">🔒</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="learning-path">
+                <div class="path-header" onclick="togglePath('storage-hunt')">
+                    🗃️ Storage Treasure Hunt
+                    <div style="font-size: 0.9rem; opacity: 0.8;">Visual learners favorite</div>
+                </div>
+                <div id="storage-hunt" class="quest-list" style="display: none;">
+                    <div class="quest-item" onclick="loadQuest('storage-vault')">
+                        <span>🏰 Find the Storage Vault</span>
+                        <span class="quest-status">🔒</span>
+                    </div>
+                    <div class="quest-item" onclick="loadQuest('upload-treasures')">
+                        <span>💎 Upload Your Treasures</span>
+                        <span class="quest-status">🔒</span>
+                    </div>
+                    <div class="quest-item" onclick="loadQuest('share-loot')">
+                        <span>🤝 Share the Loot Securely</span>
+                        <span class="quest-status">🔒</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="module-card" id="current-module">
+                <div class="module-header">
+                    <div>
+                        <h2 class="module-title">🚀 Boot Your First VM</h2>
+                        <div class="module-meta">
+                            <span class="meta-badge">⏱️ 12 minutes</span>
+                            <span class="meta-badge">🎯 Beginner</span>
+                            <span class="meta-badge">💎 100 XP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-indicator">
+                    <div class="progress-dot current"></div>
+                    <div class="progress-dot"></div>
+                    <div class="progress-dot"></div>
+                    <div class="progress-dot"></div>
+                </div>
+
+                <h3>🎬 Video Introduction (3 minutes)</h3>
+                <p style="margin-bottom: 1rem;">Watch this fun explanation of Azure Virtual Machines - think of them as digital pets you feed with CPU and RAM!</p>
+                
+                <div class="video-container">
+                    <!-- YouTube video will be embedded here -->
+                    <iframe src="https://www.youtube.com/embed/wX75Z-4MEoM" allowfullscreen></iframe>
+                </div>
+
+                <div class="lab-section">
+                    <h3>🎮 Interactive Lab: Azure Portal Adventure</h3>
+                    <p>Time to get your hands dirty! We'll guide you step-by-step through creating your first virtual machine.</p>
+
+                    <div class="lab-step">
+                        <span class="step-number">1</span>
+                        <strong>Azure Portal Scavenger Hunt (3 min)</strong>
+                        <p>Let's find the Virtual Machines service in the Azure Portal. It's like a treasure hunt!</p>
+                        <button class="action-button" onclick="openAzurePortal()">🔍 Open Azure Portal</button>
+                        <button class="action-button" onclick="markStepComplete(1)">✅ Found It!</button>
+                    </div>
+
+                    <div class="lab-step">
+                        <span class="step-number">2</span>
+                        <strong>Name Your Digital Pet (2 min)</strong>
+                        <p>Give your VM a cool name! This is your digital pet - make it memorable.</p>
+                        <input type="text" placeholder="Enter your VM name..." style="background: var(--card-bg); border: 1px solid #666; color: white; padding: 0.5rem; border-radius: 5px; margin: 0.5rem 0;">
+                        <button class="action-button" onclick="markStepComplete(2)">🏷️ Named My VM!</button>
+                    </div>
+
+                    <div class="lab-step">
+                        <span class="step-number">3</span>
+                        <strong>Deploy & Connect (7 min)</strong>
+                        <p>Hit the create button and watch the magic happen! We'll show you how to connect once it's ready.</p>
+                        <button class="action-button" onclick="simulateDeployment()">🚀 Deploy VM</button>
+                        <button class="action-button success-button" onclick="completeQuest()" style="display: none;" id="complete-btn">🎉 Quest Complete!</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <h3>⚡ Quick Win Checklist</h3>
+                    <p>Complete these to earn your achievement:</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin: 0.5rem 0;">☐ Successfully access Azure Portal</li>
+                        <li style="margin: 0.5rem 0;">☐ Navigate to Virtual Machines</li>
+                        <li style="margin: 0.5rem 0;">☐ Create and name your VM</li>
+                        <li style="margin: 0.5rem 0;">☐ Start deployment process</li>
+                        <li style="margin: 0.5rem 0;">☐ Take screenshot for trophy collection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="achievement-popup" id="achievement-popup">
+        <div style="font-size: 1.2rem; font-weight: bold;">🎉 Achievement Unlocked!</div>
+        <div id="achievement-text">First VM Deployed!</div>
+        <div style="font-size: 0.9rem; margin-top: 0.5rem;">+100 XP | Level Up!</div>
+    </div>
+
+    <script>
+        // Game State Management
+        let gameState = {
+            level: 1,
+            xp: 0,
+            badges: [],
+            completedQuests: [],
+            currentQuest: 'boot-first-vm'
+        };
+
+        // Load saved progress
+        function loadProgress() {
+            const saved = localStorage.getItem('azureLearningProgress');
+            if (saved) {
+                gameState = JSON.parse(saved);
+                updateUI();
+            }
+        }
+
+        // Save progress
+        function saveProgress() {
+            localStorage.setItem('azureLearningProgress', JSON.stringify(gameState));
+        }
+
+        // Update UI elements
+        function updateUI() {
+            document.getElementById('player-level').textContent = gameState.level;
+            document.getElementById('current-xp').textContent = gameState.xp;
+            document.getElementById('badge-count').textContent = gameState.badges.length;
+            
+            const xpForNextLevel = gameState.level * 100;
+            const xpProgress = (gameState.xp % 100) / 100 * 100;
+            document.getElementById('next-level-xp').textContent = xpForNextLevel;
+            document.getElementById('xp-fill').style.width = xpProgress + '%';
+        }
+
+        // Toggle learning path visibility
+        function togglePath(pathId) {
+            const element = document.getElementById(pathId);
+            element.style.display = element.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Load specific quest
+        function loadQuest(questId) {
+            if (questId === 'boot-first-vm') {
+                // Already loaded
+                return;
+            }
+            
+            // Add logic to load different quests
+            console.log('Loading quest:', questId);
+        }
+
+        // Open Azure Portal
+        function openAzurePortal() {
+            window.open('https://portal.azure.com', '_blank');
+        }
+
+        // Mark step as complete
+        function markStepComplete(stepNumber) {
+            const step = document.querySelectorAll('.lab-step')[stepNumber - 1];
+            step.style.background = 'rgba(16, 124, 16, 0.1)';
+            step.style.borderLeftColor = '#107c10';
+            
+            // Update progress dots
+            const dots = document.querySelectorAll('.progress-dot');
+            if (dots[stepNumber]) {
+                dots[stepNumber - 1].classList.add('completed');
+                dots[stepNumber - 1].classList.remove('current');
+                if (dots[stepNumber]) {
+                    dots[stepNumber].classList.add('current');
+                }
+            }
+            
+            // Show complete button if all steps done
+            if (stepNumber === 3) {
+                document.getElementById('complete-btn').style.display = 'inline-block';
+            }
+        }
+
+        // Simulate VM deployment
+        function simulateDeployment() {
+            const btn = event.target;
+            btn.textContent = '⏳ Deploying...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.textContent = '✅ Deployment Complete!';
+                btn.style.background = 'linear-gradient(45deg, var(--success-green), #13ce66)';
+                markStepComplete(3);
+            }, 3000);
+        }
+
+        // Complete quest and award XP
+        function completeQuest() {
+            // Award XP and badge
+            gameState.xp += 100;
+            gameState.badges.push('first-vm-deployed');
+            gameState.completedQuests.push('boot-first-vm');
+            
+            // Check for level up
+            if (gameState.xp >= gameState.level * 100) {
+                gameState.level++;
+                showAchievement('Level Up!', `Welcome to Level ${gameState.level}!`);
+            } else {
+                showAchievement('Quest Complete!', 'First VM Deployed Badge Earned!');
+            }
+            
+            saveProgress();
+            updateUI();
+            
+            // Unlock next quest
+            const nextQuest = document.querySelector('.quest-item:nth-child(2)');
+            nextQuest.classList.remove('quest-locked');
+            nextQuest.querySelector('.quest-status').textContent = '⚡';
+        }
+
+        // Show achievement popup
+        function showAchievement(title, description) {
+            const popup = document.getElementById('achievement-popup');
+            popup.querySelector('div:first-child').textContent = '🎉 ' + title;
+            document.getElementById('achievement-text').textContent = description;
+            
+            popup.classList.add('show');
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 4000);
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            loadProgress();
+            updateUI();
+        };
+
+        // ADHD-friendly features
+        document.addEventListener('keydown', function(e) {
+            // Escape key to pause/reset focus
+            if (e.key === 'Escape') {
+                document.body.style.filter = 'blur(3px)';
+                setTimeout(() => {
+                    document.body.style.filter = 'none';
+                }, 1000);
+            }
+        });
+
+        // Auto-save progress every 30 seconds
+        setInterval(saveProgress, 30000);
+    </script>
+</body>
+</html>
