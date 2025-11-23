@@ -1,0 +1,21 @@
+{
+  "projectName": "Azure-Learning",
+  "status": "active",
+  "priority": "medium",
+  "progressPercent": 20,
+  "currentFocus": "Azure cloud platform learning materials organization",
+  "completedTasks": [
+    "Project cloned from GitHub",
+    "Initial repository structure created"
+  ],
+  "upcomingTasks": [
+    "Organize Azure learning modules by certification path",
+    "Create AZ-900 (Fundamentals) study materials",
+    "Develop AZ-104 (Administrator) course content",
+    "Add hands-on lab exercises and examples",
+    "Create progress tracking system",
+    "Integrate with ai-courses if applicable"
+  ],
+  "blockers": [],
+  "notes": "Azure cloud learning repository. Can be integrated with broader AI/Cloud courses ecosystem."
+}
